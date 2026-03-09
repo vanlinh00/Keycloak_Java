@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+keycloak:
+  # Changed from auth-server-url to server-url to match your Java @Value
+  server-url: http://localhost:8088
+  realm: master
+  client-id: admin-cli
+  client-secret: gIzZy55vFf5n2PuBFDDZNPObZvZieQnr
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Using the updated property name here as well
+          issuer-uri: ${keycloak.server-url}/realms/${keycloak.realm}
+          jwk-set-uri: ${keycloak.server-url}/realms/${keycloak.realm}/protocol/openid-connect/certs
+
+# App specific admin credentials for user registration
+app:
+  keycloak-admin:
+    username: admin
+    password: admin123
